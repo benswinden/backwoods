@@ -8,6 +8,7 @@ using System.Linq;
 
 public class ChunkManager : MonoBehaviour {
 
+    public int totalChunks;
     public string firstChunk;
 
     public List<Chunk> originalChunkList = new List<Chunk>();        // List of all original chunks
@@ -21,7 +22,8 @@ public class ChunkManager : MonoBehaviour {
 
     public Chunk currentChunk { get; set; }                // The instantiated chunk the player is currently riding on
 
-    
+
+    List<GameObject> chunkList = new List<GameObject>();
 
     void Awake() {
 
@@ -39,8 +41,13 @@ public class ChunkManager : MonoBehaviour {
         // Check if there is already a level chunk to start from            
         foreach (Transform child in transform) {
 
+            if (child.GetComponent<Chunk>() && child.GetComponent<Chunk>().startChunk) {
+
+                chunkList.Add(child.gameObject);
+            }
+
             // Go through all children chunks just to turn them off and find the start chunk
-            if (child.GetComponent<Chunk>() && !child.name.Equals("LevelChunk (Start)")) {
+            if (child.GetComponent<Chunk>() && !child.GetComponent<Chunk>().startChunk) {
 
                 // Add it to our list of chunks
                 originalChunkList.Add(child.GetComponent<Chunk>());
@@ -65,8 +72,7 @@ public class ChunkManager : MonoBehaviour {
 
     // Instantiate a chunk in front of the current one
     void createNextChunk() {
-        
-        if (lastChunk != null) Destroy(lastChunk.gameObject, 2.5f);
+                
 
         Vector3 newChunkPosition = Vector3.zero;      // The first chunk created should be at zeros
         
@@ -81,6 +87,14 @@ public class ChunkManager : MonoBehaviour {
         // Move        
         newChunk.gameObject.SetActive(true);
         newChunk.updatePositions();
+
+        chunkList.Add(newChunk.gameObject);
+
+        if (chunkList.Count >= totalChunks) {
+            GameObject chunkToDestroy = chunkList[0];
+            chunkList.Remove(chunkToDestroy);
+            Destroy(chunkToDestroy, 1f);
+        }
 
         // Variables
         lastChunk = newestChunk;

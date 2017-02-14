@@ -6,6 +6,10 @@ using System.Collections.Generic;
 
 public class Chunk : MonoBehaviour {
 
+    public bool startChunk;
+
+    [Space]
+
     public GameObject startPoint;
     public GameObject endPoint;
 
@@ -23,7 +27,7 @@ public class Chunk : MonoBehaviour {
 
         initialized = true;         // Stored so that the LevelManager doesn't enable this on game start if it was left enabled in editor
 
-        if (!gameObject.name.Equals("LevelChunk (Start)") && motherChunk == null)
+        if (!startChunk && motherChunk == null)
             gameObject.SetActive(false);
     }
 
