@@ -7,7 +7,7 @@
 			"useAlphaFalloff": false,
 			"selectedBrushTab": "All",
 			"selectedBrushId": "_DefaultProceduralBrush",
-			"brushSize": 40,
+			"brushSize": 88,
 			"brushSpeed": 0.05,
 			"brushRoundness": 1,
 			"brushAngle": 0,
@@ -45,7 +45,7 @@
 			"useAlphaFalloff": false,
 			"selectedBrushTab": "All",
 			"selectedBrushId": "_DefaultProceduralBrush",
-			"brushSize": 45,
+			"brushSize": 142,
 			"brushSpeed": 1,
 			"brushRoundness": 1,
 			"brushAngle": 0,
@@ -99,7 +99,7 @@
 				{
 					"@type": "JesseStiller.TerrainFormerExtension.FauxKeyframe",
 					"inTangent": 0,
-					"outTangent": 1,
+					"outTangent": 0,
 					"tangentMode": 0,
 					"time": 1,
 					"value": 1
@@ -158,7 +158,7 @@
 			"useFalloffForCustomBrushes": false,
 			"useAlphaFalloff": false,
 			"selectedBrushTab": "All",
-			"selectedBrushId": null,
+			"selectedBrushId": "_DefaultProceduralBrush",
 			"brushSize": 35,
 			"brushSpeed": 1,
 			"brushRoundness": 1,
@@ -187,7 +187,7 @@
 			"invertBrushTexture": false,
 			"randomOffset": 10,
 			"MinBrushSpacing": 1,
-			"MaxBrushSpacing": 50,
+			"MaxBrushSpacing": 30,
 			"MinRandomRotation": -180,
 			"MaxRandomRotation": 180
 		}
@@ -213,7 +213,7 @@
 	"generateHeight": 5,
 	"flattenMode": "Flatten",
 	"setHeight": 50,
-	"boxFilterSize": 3,
+	"boxFilterSize": 5,
 	"smoothingIterations": 1,
 	"mainDirectory": "Assets/TerrainFormer/",
 	"showSculptingGridPlane": false,
