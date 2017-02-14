@@ -26,31 +26,33 @@ public class CameraController : MonoBehaviour {
 
         if (target) {
 
-            Vector3 targetPosition = target.position;
+            transform.position = new Vector3(transform.position.x, target.transform.position.y, target.transform.position.z);
 
-            if (verticalMinEnabled && verticalMaxEnabled) {
-                targetPosition.y = Mathf.Clamp(target.position.y, verticalMin, verticalMax);
-            }
-            else if (verticalMinEnabled) {
-                targetPosition.y = Mathf.Clamp(target.position.y, verticalMin, target.position.y);
-            }
-            else if (verticalMaxEnabled) {
-                targetPosition.y = Mathf.Clamp(target.position.y, target.position.y, verticalMax);
-            }
+            //Vector3 targetPosition = target.position;
 
-            if (horizontalMinEnabled && horizontalMaxEnabled) {
-                targetPosition.x = Mathf.Clamp(target.position.z, horizontalMin, horizontalMax);
-            }
-            else if (horizontalMinEnabled) {
-                targetPosition.x = Mathf.Clamp(target.position.z, horizontalMin, target.position.z);
-            }
-            else if (horizontalMaxEnabled) {
-                targetPosition.x = Mathf.Clamp(target.position.z, target.position.z, horizontalMax);
-            }
+            //if (verticalMinEnabled && verticalMaxEnabled) {
+            //    targetPosition.y = Mathf.Clamp(target.position.y, verticalMin, verticalMax);
+            //}
+            //else if (verticalMinEnabled) {
+            //    targetPosition.y = Mathf.Clamp(target.position.y, verticalMin, target.position.y);
+            //}
+            //else if (verticalMaxEnabled) {
+            //    targetPosition.y = Mathf.Clamp(target.position.y, target.position.y, verticalMax);
+            //}
 
-            targetPosition.x = transform.position.x;
+            //if (horizontalMinEnabled && horizontalMaxEnabled) {
+            //    targetPosition.x = Mathf.Clamp(target.position.z, horizontalMin, horizontalMax);
+            //}
+            //else if (horizontalMinEnabled) {
+            //    targetPosition.x = Mathf.Clamp(target.position.z, horizontalMin, target.position.z);
+            //}
+            //else if (horizontalMaxEnabled) {
+            //    targetPosition.x = Mathf.Clamp(target.position.z, target.position.z, horizontalMax);
+            //}
 
-            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime * Time.deltaTime);
+            //targetPosition.x = transform.position.x;
+
+            //transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime * Time.deltaTime);
         }
     }
 }
