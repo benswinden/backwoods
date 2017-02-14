@@ -17,6 +17,14 @@ ModelImporter:
     100018: trunk3
     100020: trunk4
     100022: coneTree
+    100024: boulder1
+    100026: boulder2
+    100028: boulder3
+    100030: cone_snowed
+    100032: trunk1_snow
+    100034: trunk2_snow
+    100036: trunk3_snow
+    100038: trunk4_snow
     400000: bg_trunk1
     400002: bg_trunk2
     400004: bg_trunk3
@@ -29,6 +37,14 @@ ModelImporter:
     400018: trunk3
     400020: trunk4
     400022: coneTree
+    400024: boulder1
+    400026: boulder2
+    400028: boulder3
+    400030: cone_snowed
+    400032: trunk1_snow
+    400034: trunk2_snow
+    400036: trunk3_snow
+    400038: trunk4_snow
     2300000: bg_trunk1
     2300002: bg_trunk2
     2300004: bg_trunk3
@@ -40,6 +56,14 @@ ModelImporter:
     2300016: trunk3
     2300018: trunk4
     2300020: coneTree
+    2300022: boulder1
+    2300024: boulder2
+    2300026: boulder3
+    2300028: cone_snowed
+    2300030: trunk1_snow
+    2300032: trunk2_snow
+    2300034: trunk3_snow
+    2300036: trunk4_snow
     3300000: bg_trunk1
     3300002: bg_trunk2
     3300004: bg_trunk3
@@ -51,6 +75,14 @@ ModelImporter:
     3300016: trunk3
     3300018: trunk4
     3300020: coneTree
+    3300022: boulder1
+    3300024: boulder2
+    3300026: boulder3
+    3300028: cone_snowed
+    3300030: trunk1_snow
+    3300032: trunk2_snow
+    3300034: trunk3_snow
+    3300036: trunk4_snow
     4300000: trunk1
     4300002: trunk2
     4300004: trunk3
@@ -62,6 +94,14 @@ ModelImporter:
     4300016: bg_trunk3
     4300018: distantCone
     4300020: coneTree
+    4300022: trunk1_snow
+    4300024: trunk2_snow
+    4300026: trunk3_snow
+    4300028: trunk4_snow
+    4300030: cone_snowed
+    4300032: boulder3
+    4300034: boulder2
+    4300036: boulder1
   materials:
     importMaterials: 0
     materialName: 0
