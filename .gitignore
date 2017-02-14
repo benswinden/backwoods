@@ -1,6 +1,7 @@
 /[Ll]ibrary/
 backwoods/Library/*
 /[Tt]emp/
+backwoods/Temp/
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
@@ -29,3 +30,4 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+backwoods/Temp/UnityTempFile-d56c6dd314ac7c64ea7eec12c8d2c00f
