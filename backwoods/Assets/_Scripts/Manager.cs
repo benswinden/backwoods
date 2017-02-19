@@ -5,4 +5,21 @@ using UnityEngine;
 public class Manager : MonoBehaviour {
 
     public static ChunkManager chunkManager;
+
+    void Update() {
+
+        if (Input.GetKeyUp(KeyCode.S)) {
+
+            string filename = ScreenShotName();
+            Application.CaptureScreenshot(filename, 2);
+            Debug.Log(string.Format("Screen Captured: {0}", filename));
+        }
+    }
+
+    public string ScreenShotName() {
+
+        return string.Format("{0}/Screenshots/{1}.png",
+            Application.dataPath,
+            System.DateTime.Now.ToString("yyyy-MM-dd__HH-mm-ss"));
+    }
 }

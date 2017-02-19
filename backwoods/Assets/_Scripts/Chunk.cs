@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class Chunk : MonoBehaviour {
 
     public bool startChunk;
+    public bool dontDeactivate;
 
     [Space]
 
@@ -27,7 +28,7 @@ public class Chunk : MonoBehaviour {
 
         initialized = true;         // Stored so that the LevelManager doesn't enable this on game start if it was left enabled in editor
 
-        if (!startChunk && motherChunk == null)
+        if (!dontDeactivate && !startChunk && motherChunk == null)
             gameObject.SetActive(false);
     }
 
