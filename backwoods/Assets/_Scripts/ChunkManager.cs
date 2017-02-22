@@ -9,10 +9,24 @@ using System.Linq;
 public class ChunkManager : MonoBehaviour {
 
     public int totalChunks;
-    public string firstChunk;
+    public float lutFadeTime = 2;
 
-    public List<Chunk> originalChunkList = new List<Chunk>();        // List of all original chunks
+    [Space]
 
+    public List<Chunk> glitchChunkList = new List<Chunk>();
+    public List<Chunk> airbnbChunkList = new List<Chunk>();
+    public List<Chunk> squareChunkList = new List<Chunk>();
+    public List<Chunk> awardsChunkList = new List<Chunk>();
+    public List<Chunk> gdcChunkList = new List<Chunk>();
+
+    [Space]
+
+    public Texture airbnbLUT;
+    public Texture squareLUT;
+    public Texture awardsLUT;
+    public Texture gdcLUT;
+
+    List<Chunk> currentChunkList;
     Chunk lastChunk;
 
 
@@ -23,6 +37,7 @@ public class ChunkManager : MonoBehaviour {
     public Chunk currentChunk { get; set; }                // The instantiated chunk the player is currently riding on
 
 
+    int currentSection = 1;
     List<GameObject> chunkList = new List<GameObject>();
 
     void Awake() {
@@ -32,42 +47,53 @@ public class ChunkManager : MonoBehaviour {
 
     void Start() {
 
-        initialize(firstChunk);
+        initialize();
+    }
+
+    void Update() {
+
+        if (Input.GetKeyUp(KeyCode.Return)) {
+
+            moveToNextSection();
+        }
     }
 
 
-    public void initialize(string firstChunk) {
+
+    public void initialize() {
+
+        currentChunkList = glitchChunkList;
 
         // Check if there is already a level chunk to start from            
-        foreach (Transform child in transform) {
+        //foreach (Transform child in transform) {
 
-            if (child.GetComponent<Chunk>() && child.GetComponent<Chunk>().startChunk) {
+        //    if (child.GetComponent<Chunk>() && child.GetComponent<Chunk>().startChunk) {
 
-                chunkList.Add(child.gameObject);
-            }
+        //        chunkList.Add(child.gameObject);
+        //    }
 
-            // Go through all children chunks just to turn them off and find the start chunk
-            if (child.GetComponent<Chunk>() && !child.GetComponent<Chunk>().startChunk) {
+        //    // Go through all children chunks just to turn them off and find the start chunk
+        //    if (child.GetComponent<Chunk>() && !child.GetComponent<Chunk>().startChunk) {
 
-                // Add it to our list of chunks
-                originalChunkList.Add(child.GetComponent<Chunk>());
+        //        // Add it to our list of chunks
+        //        //originalChunkList.Add(child.GetComponent<Chunk>());
 
-                // All chunks need to be run their awake and start methods so they need to be activated temporarily. LevelChunk will disable it's own gameobject once initialization is complete
-                if (!child.GetComponent<Chunk>().initialized)
-                    child.gameObject.SetActive(true);
-            }
-            else if (child.GetComponent<Chunk>() && child.name.Equals("LevelChunk (Start)")) {
-                startChunk = child.GetComponent<Chunk>();
-            }
-        }
+        //        // All chunks need to be run their awake and start methods so they need to be activated temporarily. LevelChunk will disable it's own gameobject once initialization is complete
+        //        if (!child.GetComponent<Chunk>().initialized)
+        //            child.gameObject.SetActive(true);
+        //    }
+        //    else if (child.GetComponent<Chunk>() && child.name.Equals("LevelChunk (Start)")) {
+        //        startChunk = child.GetComponent<Chunk>();
+        //    }
+        //}
 
-        Chunk chunk = findChunk(firstChunk);
-        if (chunk == null)
-            Debug.Log("Level Manager: initialize() : Can't find firstChunk: " + firstChunk);
-        else
-            activeChunk = chunk;                 
+        //Chunk chunk = findChunk(firstChunk);
+        //if (chunk == null)
+        //    Debug.Log("Level Manager: initialize() : Can't find firstChunk: " + firstChunk);
+        //else
+        //    activeChunk = chunk;                 
 
-        createNextChunk();
+        createNextChunk();        
     }
 
     // Instantiate a chunk in front of the current one
@@ -79,6 +105,7 @@ public class ChunkManager : MonoBehaviour {
         // If this is not the first chunk
         if (newestChunk != null) newChunkPosition = new Vector3(newestChunk.endPoint.transform.position.x, newestChunk.endPoint.transform.position.y, newestChunk.endPoint.transform.position.z);
 
+        activeChunk = currentChunkList[Random.Range(0, currentChunkList.Count)];
 
         Chunk newChunk = Instantiate(activeChunk, newChunkPosition, Quaternion.identity) as Chunk;
         newChunk.motherChunk = activeChunk;
@@ -120,42 +147,10 @@ public class ChunkManager : MonoBehaviour {
 
     // Player collides with a level chunk collider
     public void playerTrigger(string transitionToChunk, ChunkCollider chunkCollider) {
-                
-
-        if (!transitionToChunk.Equals("")) {
-
-            Chunk chunk = findChunk(transitionToChunk);
-
-            if (chunk == null)
-                Debug.Log("Level Manager: playerTrigger with transition : The provided chunk was not found in the original chunk list");
-            else {
-
-                activeChunk = chunk;
-
-                if (chunkCollider.parentChunk == currentChunk)      // If this is true, it means we already went through a chunk collider for this chunk and there is already a chunk in front of this one
-                    updateNextChunk();
-                else
-                    createNextChunk();
-            }
-        }                
-        else
-            createNextChunk();                
+      
+        createNextChunk();                
     }
 
-    public void orbGet(string chunkName) {
-
-        Chunk chunk = findChunk(chunkName);
-
-        if (chunk == null) {
-         
-            Debug.Log("Level Manager: orbGet() : The orbs chunk was not found in the original chunk list");
-        }
-        else {
-
-            activeChunk = chunk;
-            updateNextChunk();
-        }
-    }
 
 
     public void destroyStartChunk() {
@@ -170,16 +165,50 @@ public class ChunkManager : MonoBehaviour {
         chunk.gameObject.SetActive(false);
     }
 
-    Chunk findChunk(string chunkName) {
+    void moveToNextSection() {
 
-        Chunk foundChunk = null;
-        foreach (Chunk levelChunk in originalChunkList) {
+        currentSection++;
 
-            if (levelChunk.name.Equals(chunkName)) {
-                foundChunk = levelChunk;
-            }
+        switch (currentSection) {
+
+            case 2:
+                currentChunkList = airbnbChunkList;
+                lutChange(airbnbLUT);
+                break;
+
+            case 3:
+                currentChunkList = squareChunkList;
+                lutChange(squareLUT);
+                break;
+
+            case 4:
+                currentChunkList = awardsChunkList;
+                lutChange(awardsLUT);
+                break;
+
+            case 5:
+                currentChunkList = gdcChunkList;
+                lutChange(gdcLUT);
+                break;
+            case 6:
+                end();
+                break;
         }
+    }
 
-        return foundChunk;
+    void lutChange(Texture lut) {
+
+        System.Action showMethod = delegate() { callback(); };
+        Manager.postController.GetComponent<AmplifyColorBase>().BlendTo(lut, lutFadeTime, showMethod);
+    }
+
+    void callback() {
+
+
+    }
+
+    void end() {
+
+        print("FIN");
     }
 }

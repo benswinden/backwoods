@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PostProcessing.Utilities;
 
 public class Manager : MonoBehaviour {
 
     public static ChunkManager chunkManager;
+    public static PostProcessingController postController;
 
     void Update() {
 

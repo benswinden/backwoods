@@ -69,6 +69,11 @@ namespace UnityEngine.PostProcessing.Utilities
 
         #region MonoBehaviour functions
 
+        void Awake() {
+
+            Manager.postController = this;
+        }
+
         void Start()
         {
             // Replace the profile with its clone.
