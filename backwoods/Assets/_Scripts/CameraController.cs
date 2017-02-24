@@ -30,7 +30,7 @@ public class CameraController : MonoBehaviour {
     void Update() {
 
         // Camera Movement
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + currentSpeed);
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + (currentSpeed * Time.deltaTime));
 
         // Animation
         if (animating) {
