@@ -23,6 +23,6 @@ public class BPMReceiver : MonoBehaviour {
 
     void OnTick() {
 
-        animator.SetTrigger("Go");
+        animator.Play("Animation");
     }
 }

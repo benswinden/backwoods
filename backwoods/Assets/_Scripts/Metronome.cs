@@ -39,6 +39,9 @@ public class Metronome : MonoBehaviour {
 
             if (Input.GetKeyDown(KeyCode.Z)) {
 
+                StopCoroutine("timingRoutine");
+                StartCoroutine("timingRoutine");
+
                 doTick();
 
                 time = 0;
@@ -51,12 +54,24 @@ public class Metronome : MonoBehaviour {
 
             if (Input.GetKeyDown(KeyCode.Z)) {
 
+                StopCoroutine("timingRoutine");
+
                 startedTiming = false;
 
-                bpm = Mathf.RoundToInt( 60 / time);
+                bpm = 60 / time;
+
+                doTick();
             }
         }
     }
+
+    IEnumerator timingRoutine() {
+
+        yield return new WaitForSeconds(1.5f);
+
+        startedTiming = false;
+    }
+
 
     void LateUpdate() {
 
@@ -71,9 +86,8 @@ public class Metronome : MonoBehaviour {
         ticked = true;
 
         foreach (GameObject obj in objects) {
-
-            if (Random.value > 0.5f)
-                obj.SendMessage("OnTick");
+            
+            obj.SendMessage("OnTick");
         } 
     }
 
@@ -95,3 +109,5 @@ public class Metronome : MonoBehaviour {
 
     }
 }
+
+/// hi u cute
