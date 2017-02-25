@@ -47,6 +47,7 @@ public class ChunkManager : MonoBehaviour {
 
     void Start() {
 
+        currentChunkList = glitchChunkList;
         initialize();
     }
 
@@ -54,7 +55,7 @@ public class ChunkManager : MonoBehaviour {
 
         if (Input.GetKeyUp(KeyCode.Return)) {
 
-            moveToNextSection();
+            StartCoroutine(moveToNextSection());
         }
     }
 
@@ -62,7 +63,8 @@ public class ChunkManager : MonoBehaviour {
 
     public void initialize() {
 
-        currentChunkList = glitchChunkList;
+        Manager.cameraController.init();
+
 
         // Check if there is already a level chunk to start from            
         //foreach (Transform child in transform) {
@@ -93,7 +95,22 @@ public class ChunkManager : MonoBehaviour {
         //else
         //    activeChunk = chunk;                 
 
+        createChunk(new Vector3(0, 0, -360));
         createNextChunk();        
+    }
+
+    void createChunk(Vector3 pos) {
+
+        activeChunk = currentChunkList[Random.Range(0, currentChunkList.Count)];
+        Chunk newChunk = Instantiate(activeChunk, pos, Quaternion.identity) as Chunk;
+        newChunk.motherChunk = activeChunk;
+        newChunk.name += " " + Mathf.Floor(Random.Range(0, 101));    // Random number used to differentiate between chunks at runtime
+
+        // Move        
+        newChunk.gameObject.SetActive(true);
+        newChunk.updatePositions();
+
+        chunkList.Add(newChunk.gameObject);
     }
 
     // Instantiate a chunk in front of the current one
@@ -127,7 +144,7 @@ public class ChunkManager : MonoBehaviour {
         lastChunk = newestChunk;
         newestChunk = newChunk;
     }
-
+   
 
     // When the next chunk in the list has been changed via a switch, replace the chunk
     void updateNextChunk() {
@@ -165,7 +182,9 @@ public class ChunkManager : MonoBehaviour {
         chunk.gameObject.SetActive(false);
     }
 
-    void moveToNextSection() {
+    IEnumerator moveToNextSection() {
+
+        Manager.cameraController.fadeToBlack();
 
         currentSection++;
 
@@ -173,30 +192,45 @@ public class ChunkManager : MonoBehaviour {
 
             case 2:
                 currentChunkList = airbnbChunkList;
-                lutChange(airbnbLUT);
+                StartCoroutine(lutChange(airbnbLUT));
                 break;
 
             case 3:
                 currentChunkList = squareChunkList;
-                lutChange(squareLUT);
+                StartCoroutine(lutChange(squareLUT));
                 break;
 
             case 4:
                 currentChunkList = awardsChunkList;
-                lutChange(awardsLUT);
+                StartCoroutine(lutChange(awardsLUT));
                 break;
 
             case 5:
                 currentChunkList = gdcChunkList;
-                lutChange(gdcLUT);
+                StartCoroutine(lutChange(gdcLUT));
                 break;
             case 6:
                 end();
                 break;
         }
-    }
 
-    void lutChange(Texture lut) {
+        yield return new WaitForSeconds(2f);
+
+        foreach (GameObject chunk in chunkList) {
+
+
+            Destroy(chunk);
+        }
+
+        chunkList.Clear();
+        newestChunk = null;
+
+        initialize();
+    }    
+
+    IEnumerator lutChange(Texture lut) {
+
+        yield return new WaitForSeconds(2.0f);
 
         System.Action showMethod = delegate() { callback(); };
         Manager.postController.GetComponent<AmplifyColorBase>().BlendTo(lut, lutFadeTime, showMethod);

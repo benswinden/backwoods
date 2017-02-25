@@ -8,6 +8,9 @@ public class Manager : MonoBehaviour {
     public static ChunkManager chunkManager;
     public static PostProcessingController postController;
 
+    public static CameraController cameraController;
+    public static Metronome metronome;
+
     void Update() {
 
         if (Input.GetKeyUp(KeyCode.S)) {

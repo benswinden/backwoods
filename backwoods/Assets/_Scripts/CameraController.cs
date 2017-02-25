@@ -22,11 +22,17 @@ public class CameraController : MonoBehaviour {
 
     void Awake() {
 
+        Manager.cameraController = this;
         currentSpeed = moveSpeed;
+
+        init();
+    }
+
+    public void init() {
 
         transform.position = new Vector3(transform.position.x, 0, 0);        
     }
-   
+
     void Update() {
 
         // Camera Movement
@@ -47,9 +53,20 @@ public class CameraController : MonoBehaviour {
             else
                 currentSpeed = moveSpeed;
         }
-        if (Input.GetKeyUp(KeyCode.Q)) {
+        
+    }
 
-            GetComponent<Animator>().SetTrigger("FadeToBlack");
-        }
+    public void fadeToBlack() {
+
+        GetComponent<Animator>().SetTrigger("FadeToBlack");
+
+        StartCoroutine("fadeBackFromBlack");
+    }
+
+    IEnumerator fadeBackFromBlack() {
+
+        yield return new WaitForSeconds(1.5f);
+        GetComponent<Animator>().SetTrigger("FadeBackFromBlack");
+        
     }
 }
