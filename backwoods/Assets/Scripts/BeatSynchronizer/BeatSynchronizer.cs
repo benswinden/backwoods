@@ -27,7 +27,7 @@ public class BeatSynchronizer : MonoBehaviour {
 
     void Update() {
 
-        if (Input.GetKeyUp(KeyCode.Tab)) {
+        if (Input.GetKeyUp(KeyCode.Q)) {
 
             init();            
         }

@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class GlitchIn : MonoBehaviour {
 
+    public bool startIn;
+
     bool animating;
 
 
     void Start() {
 
-        GetComponent<MeshRenderer>().enabled = false;
-        GetComponentInParent<TreeList>().treeList.Add(this);
+        if (!startIn)
+            GetComponent<MeshRenderer>().enabled = false;
+        
+        GetComponentInParent<TreeList>().treeListIn.Add(this);
     }
 
     public void glitchIn() {

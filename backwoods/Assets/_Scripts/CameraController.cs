@@ -14,7 +14,12 @@ public class CameraController : MonoBehaviour {
     public float v_intensity;
     [Range(0, 1)]
     public float v_smoothness;
-    
+
+
+    [Space]
+
+    public float bloom_intensity;
+
     float currentSpeed;
 
 
@@ -32,7 +37,18 @@ public class CameraController : MonoBehaviour {
         transform.position = new Vector3(transform.position.x, 0, 0);        
     }
 
+    bool stopping;
+    public void stop() {
+
+        stopping = true;
+    }
+
     void Update() {
+
+        Manager.postController.bloom.bloom.softKnee = bloom_intensity;
+
+        if (stopping && currentSpeed > 0)
+            currentSpeed -= 0.3f;
 
         // Camera Movement
         transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + (currentSpeed * Time.deltaTime));
@@ -48,7 +64,22 @@ public class CameraController : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.Space))
             GetComponent<Animator>().SetTrigger("Start");
 
+        if (Input.GetKeyUp(KeyCode.Escape)) {
+
+            if (!ended) {
+                ended = true;
+                GetComponent<Animator>().SetTrigger("FadeToBlackEnd");
+            }
+            else {
+
+                ended = false;
+                GetComponent<Animator>().SetTrigger("Escape");
+            }
+        }
+
     }
+
+    bool ended;
 
     public void fadeToBlack() {
 

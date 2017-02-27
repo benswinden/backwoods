@@ -14,12 +14,12 @@ public class Manager : MonoBehaviour {
 
     void Update() {
 
-        if (Input.GetKeyUp(KeyCode.S)) {
+        //if (Input.GetKeyUp(KeyCode.S)) {
 
-            string filename = ScreenShotName(0);
-            Application.CaptureScreenshot(filename, 2);
-            Debug.Log(string.Format("Screen Captured: {0}", filename));
-        }
+        //    string filename = ScreenShotName(0);
+        //    Application.CaptureScreenshot(filename, 2);
+        //    Debug.Log(string.Format("Screen Captured: {0}", filename));
+        //}
     }
 
     public static string ScreenShotName(int number) {

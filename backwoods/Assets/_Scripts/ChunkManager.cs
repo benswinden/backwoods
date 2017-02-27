@@ -114,7 +114,7 @@ public class ChunkManager : MonoBehaviour {
         createNextChunk();        
     }
 
-    void createChunk(Vector3 pos) {        
+    void createChunk(Vector3 pos) {
 
         activeChunk = currentChunkList[currentChunkInList];
 

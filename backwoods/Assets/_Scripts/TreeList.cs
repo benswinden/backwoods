@@ -6,11 +6,12 @@ public class TreeList : MonoBehaviour {
     
     public List<GlitchIn> treeList { get; set; }
 
-    List<GlitchIn> treeListIn = new List<GlitchIn>();
+    public List<GlitchIn> treeListIn { get; set; }
 
     void Awake() {
 
         treeList = new List<GlitchIn>();
+        treeListIn = new List<GlitchIn>();
     }
 
     void Update() {

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ChunkCollider : MonoBehaviour {
 
+    public bool stopPlayer;
 
     public string transitionTo;
 
@@ -15,11 +16,17 @@ public class ChunkCollider : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
-        
-        if (other.tag.Equals("Ghost")) {
 
-            Manager.chunkManager.playerTrigger(transitionTo, this);
-            Destroy(gameObject);
+        if (!stopPlayer) {
+            if (other.tag.Equals("Ghost")) {
+
+                Manager.chunkManager.playerTrigger(transitionTo, this);
+                Destroy(gameObject);
+            }
+        }
+        else {
+
+            Manager.cameraController.stop();
         }
     }
 }
