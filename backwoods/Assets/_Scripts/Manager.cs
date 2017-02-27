@@ -10,20 +10,21 @@ public class Manager : MonoBehaviour {
 
     public static CameraController cameraController;
     public static Metronome metronome;
+    public static BeatCounters beatCounters;
 
     void Update() {
 
         if (Input.GetKeyUp(KeyCode.S)) {
 
-            string filename = ScreenShotName();
+            string filename = ScreenShotName(0);
             Application.CaptureScreenshot(filename, 2);
             Debug.Log(string.Format("Screen Captured: {0}", filename));
         }
     }
 
-    public string ScreenShotName() {
+    public static string ScreenShotName(int number) {
 
-        return string.Format("{0}/Screenshots/{1}.png",
+        return string.Format("{0}/Screenshots/{1} + " + number + ".png",
             Application.dataPath,
             System.DateTime.Now.ToString("yyyy-MM-dd__HH-mm-ss"));
     }

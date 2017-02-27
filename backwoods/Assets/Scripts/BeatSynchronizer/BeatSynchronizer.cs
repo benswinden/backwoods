@@ -22,11 +22,24 @@ public class BeatSynchronizer : MonoBehaviour {
 	
 	void Start ()
 	{
-		double initTime = AudioSettings.dspTime;
-        audioSource.PlayScheduled(initTime + startDelay);
-		if (OnAudioStart != null) {
-			OnAudioStart(initTime + startDelay);
-		}
+        init(); 
 	}
 
+    void Update() {
+
+        if (Input.GetKeyUp(KeyCode.Tab)) {
+
+            init();            
+        }
+    }
+
+
+    void init() {
+
+        double initTime = AudioSettings.dspTime;
+        audioSource.PlayScheduled(initTime + startDelay);
+        if (OnAudioStart != null) {
+            OnAudioStart(initTime + startDelay);
+        }
+    }
 }

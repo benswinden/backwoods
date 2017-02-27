@@ -14,8 +14,7 @@ public class CameraController : MonoBehaviour {
     public float v_intensity;
     [Range(0, 1)]
     public float v_smoothness;
-
-    float fastSpeed = 1f;
+    
     float currentSpeed;
 
 
@@ -44,15 +43,7 @@ public class CameraController : MonoBehaviour {
             Manager.postController.vignette.intensity = v_intensity;
             Manager.postController.vignette.smoothness = v_smoothness;
         }
-
-
-        if (Input.GetKeyUp(KeyCode.Tab)) {
-
-            if (currentSpeed == moveSpeed)
-                currentSpeed = fastSpeed;
-            else
-                currentSpeed = moveSpeed;
-        }
+        
         
     }
 

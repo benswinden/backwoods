@@ -29,6 +29,8 @@ public class BeatCounterEditor : Editor {
 		targetObject.audioSource = (AudioSource)EditorGUILayout.ObjectField("Audio source", targetObject.audioSource, typeof(AudioSource), true);
 
 		serializedObject.Update();
+        EditorUtility.SetDirty(targetObject);
+
 		//EditorGUIUtility.LookLikeInspector();
 		SerializedProperty obs = serializedObject.FindProperty("observers");
 		EditorGUI.BeginChangeCheck();

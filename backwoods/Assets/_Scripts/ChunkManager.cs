@@ -21,6 +21,14 @@ public class ChunkManager : MonoBehaviour {
 
     [Space]
 
+    public List<GameObject> glitchObjectList = new List<GameObject>();
+    public List<GameObject> airbnbObjectList = new List<GameObject>();
+    public List<GameObject> squareObjectList = new List<GameObject>();
+    public List<GameObject> awardsObjectList = new List<GameObject>();
+    public List<GameObject> gdcObjectList = new List<GameObject>();
+
+    [Space]
+
     public Texture airbnbLUT;
     public Texture squareLUT;
     public Texture awardsLUT;
@@ -38,7 +46,11 @@ public class ChunkManager : MonoBehaviour {
 
 
     int currentSection = 1;
+    int currentChunkInList;
     List<GameObject> chunkList = new List<GameObject>();
+
+    List<GameObject> specialObjectList = new List<GameObject>();
+
 
     void Awake() {
 
@@ -48,6 +60,9 @@ public class ChunkManager : MonoBehaviour {
     void Start() {
 
         currentChunkList = glitchChunkList;
+
+        activateObjects(glitchObjectList, null);
+
         initialize();
     }
 
@@ -122,7 +137,11 @@ public class ChunkManager : MonoBehaviour {
         // If this is not the first chunk
         if (newestChunk != null) newChunkPosition = new Vector3(newestChunk.endPoint.transform.position.x, newestChunk.endPoint.transform.position.y, newestChunk.endPoint.transform.position.z);
 
-        activeChunk = currentChunkList[Random.Range(0, currentChunkList.Count)];
+        currentChunkInList++;
+        if (currentChunkInList == currentChunkList.Count)
+            currentChunkInList = 0;
+
+        activeChunk = currentChunkList[currentChunkInList];
 
         Chunk newChunk = Instantiate(activeChunk, newChunkPosition, Quaternion.identity) as Chunk;
         newChunk.motherChunk = activeChunk;
@@ -168,8 +187,6 @@ public class ChunkManager : MonoBehaviour {
         createNextChunk();                
     }
 
-
-
     public void destroyStartChunk() {
 
         Destroy(startChunk.gameObject, 30f);
@@ -187,26 +204,31 @@ public class ChunkManager : MonoBehaviour {
         Manager.cameraController.fadeToBlack();
 
         currentSection++;
+        currentChunkInList = 0;
 
         switch (currentSection) {
 
             case 2:
                 currentChunkList = airbnbChunkList;
+                StartCoroutine(activateObjects(airbnbObjectList, glitchObjectList));
                 StartCoroutine(lutChange(airbnbLUT));
                 break;
 
             case 3:
                 currentChunkList = squareChunkList;
+                StartCoroutine(activateObjects(squareObjectList, airbnbObjectList));
                 StartCoroutine(lutChange(squareLUT));
                 break;
 
             case 4:
                 currentChunkList = awardsChunkList;
+                StartCoroutine(activateObjects(awardsObjectList, squareObjectList));
                 StartCoroutine(lutChange(awardsLUT));
                 break;
 
             case 5:
                 currentChunkList = gdcChunkList;
+                StartCoroutine(activateObjects(gdcObjectList, awardsObjectList));
                 StartCoroutine(lutChange(gdcLUT));
                 break;
             case 6:
@@ -226,7 +248,23 @@ public class ChunkManager : MonoBehaviour {
         newestChunk = null;
 
         initialize();
-    }    
+    }
+
+    IEnumerator activateObjects(List<GameObject> objectsToActivate, List<GameObject> objectsToDeactivate) {
+
+        yield return new WaitForSeconds(2.0f);
+
+        if (objectsToDeactivate != null) {
+            foreach (GameObject obj in objectsToDeactivate) {
+
+                obj.SetActive(false);
+            }
+        }
+        foreach (GameObject obj in objectsToActivate) {
+            
+            obj.SetActive(true);
+        }
+    }
 
     IEnumerator lutChange(Texture lut) {
 

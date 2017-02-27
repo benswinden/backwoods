@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using SynchronizerData;
 
 /// <summary>
@@ -17,7 +18,10 @@ public class BeatCounter : MonoBehaviour {
 	public BeatType beatType = BeatType.OnBeat;
 	public float loopTime = 30f;
 	public AudioSource audioSource;
-	public GameObject[] observers;
+
+    [Space]
+
+	public List<GameObject> observers;
 	
 	private float nextBeatSample;
 	private float samplePeriod;
@@ -91,7 +95,8 @@ public class BeatCounter : MonoBehaviour {
 			
 			if (currentSample >= (nextBeatSample + sampleOffset)) {
 				foreach (GameObject obj in observers) {
-					obj.GetComponent<BeatObserver>().BeatNotify(beatType);
+                    if (obj != null)
+					    obj.GetComponent<BeatObserver>().BeatNotify(beatType);
 				}
 				nextBeatSample += samplePeriod;
 			}
