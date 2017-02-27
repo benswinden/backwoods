@@ -44,7 +44,10 @@ public class CameraController : MonoBehaviour {
             Manager.postController.vignette.smoothness = v_smoothness;
         }
         
-        
+
+        if (Input.GetKeyUp(KeyCode.Space))
+            GetComponent<Animator>().SetTrigger("Start");
+
     }
 
     public void fadeToBlack() {

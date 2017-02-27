@@ -95,8 +95,10 @@ public class BeatCounter : MonoBehaviour {
 			
 			if (currentSample >= (nextBeatSample + sampleOffset)) {
 				foreach (GameObject obj in observers) {
-                    if (obj != null)
-					    obj.GetComponent<BeatObserver>().BeatNotify(beatType);
+                    if (obj != null && obj.activeInHierarchy) {
+
+                        obj.GetComponent<BeatObserver>().BeatNotify(beatType);
+                    }
 				}
 				nextBeatSample += samplePeriod;
 			}

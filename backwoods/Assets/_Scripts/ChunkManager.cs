@@ -114,9 +114,10 @@ public class ChunkManager : MonoBehaviour {
         createNextChunk();        
     }
 
-    void createChunk(Vector3 pos) {
+    void createChunk(Vector3 pos) {        
 
-        activeChunk = currentChunkList[Random.Range(0, currentChunkList.Count)];
+        activeChunk = currentChunkList[currentChunkInList];
+
         Chunk newChunk = Instantiate(activeChunk, pos, Quaternion.identity) as Chunk;
         newChunk.motherChunk = activeChunk;
         newChunk.name += " " + Mathf.Floor(Random.Range(0, 101));    // Random number used to differentiate between chunks at runtime
@@ -126,6 +127,10 @@ public class ChunkManager : MonoBehaviour {
         newChunk.updatePositions();
 
         chunkList.Add(newChunk.gameObject);
+
+        currentChunkInList++;
+        if (currentChunkInList == currentChunkList.Count)
+            currentChunkInList = 0;
     }
 
     // Instantiate a chunk in front of the current one
@@ -137,9 +142,6 @@ public class ChunkManager : MonoBehaviour {
         // If this is not the first chunk
         if (newestChunk != null) newChunkPosition = new Vector3(newestChunk.endPoint.transform.position.x, newestChunk.endPoint.transform.position.y, newestChunk.endPoint.transform.position.z);
 
-        currentChunkInList++;
-        if (currentChunkInList == currentChunkList.Count)
-            currentChunkInList = 0;
 
         activeChunk = currentChunkList[currentChunkInList];
 
@@ -162,6 +164,10 @@ public class ChunkManager : MonoBehaviour {
         // Variables
         lastChunk = newestChunk;
         newestChunk = newChunk;
+
+        currentChunkInList++;
+        if (currentChunkInList == currentChunkList.Count)
+            currentChunkInList = 0;
     }
    
 

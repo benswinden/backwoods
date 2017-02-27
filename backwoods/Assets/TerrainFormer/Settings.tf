@@ -8,7 +8,7 @@
 			"selectedBrushTab": "All",
 			"selectedBrushId": "_DefaultProceduralBrush",
 			"brushSize": 88,
-			"brushSpeed": 0.05,
+			"brushSpeed": 0.1,
 			"brushRoundness": 1,
 			"brushAngle": 0,
 			"brushFalloffFauxFrames": [
