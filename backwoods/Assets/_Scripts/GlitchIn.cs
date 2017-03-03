@@ -14,7 +14,10 @@ public class GlitchIn : MonoBehaviour {
         if (!startIn)
             GetComponent<MeshRenderer>().enabled = false;
         
+        if (startIn)
         GetComponentInParent<TreeList>().treeListIn.Add(this);
+        else
+            GetComponentInParent<TreeList>().treeList.Add(this);
     }
 
     public void glitchIn() {
